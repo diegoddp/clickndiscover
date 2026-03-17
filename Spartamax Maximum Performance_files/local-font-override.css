@@ -1,0 +1,59 @@
+html, body,
+button, input, select, textarea,
+p, span, a, li, div,
+h1, h2, h3, h4, h5, h6,
+.menu > li a,
+.hero-hd,
+.hero-hd-lng,
+.small-title,
+.title,
+.medium,
+.light,
+.semi-b,
+.m-bold,
+.r-bold,
+b, strong {
+  font-family: Montserrat, sans-serif !important;
+}
+
+body {
+  font-weight: 400 !important;
+}
+
+.menu > li a {
+  font-weight: 400 !important;
+  letter-spacing: 1.2px !important;
+}
+
+.hero-hd {
+  font-weight: 700 !important;
+  line-height: 1.05 !important;
+}
+
+.hero-hd-lng,
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700 !important;
+}
+
+.light {
+  font-weight: 300 !important;
+}
+
+.medium {
+  font-weight: 500 !important;
+}
+
+.semi-b {
+  font-weight: 600 !important;
+}
+
+b,
+strong,
+.bold,
+.m-bold,
+.r-bold {
+  font-weight: 800 !important;
+}

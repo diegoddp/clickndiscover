@@ -1,0 +1,94 @@
+// Exit modal for desktop
+let exitshow = 0;
+let counter = 0;
+let maxshow = 2;
+let exitModal = document.querySelector(".modal-wrapper");
+// let timer=120000;
+let timer=500;
+// $('.modal').hide();
+$('.close-btn').click(function(){
+    // $('.modal-wrapper').hide();
+    exitModal.style.visibility = "hidden";
+    exitModal.style.opacity = '0';
+    $("body").css("overflow","visible");
+});
+
+
+setTimeout(function(){
+    
+        exitfunc(exitshow);
+    
+},  timer);
+
+function exitfunc(exitshow,timer){
+   
+    
+        console.log("if");
+        if(exitshow==0){
+            windowleave(maxshow);
+        }
+        else{
+            secondtimer(timer);
+        }
+   
+}
+
+function windowleave(maxshow){
+    // alert("window leave"+ exitshow);
+    $(window).on('mouseleave', function(event) {
+        if($("#exit-pop").attr("class")!="modal-wrapper exit-intent remove"){ 
+            
+            if(exitshow==0){
+                if(event.clientY <= 0 )
+                {
+
+                    if (exitModal.style.display === 'block') {
+                        return false
+                    }
+                    exitModal.style.visibility = "visible";
+                    exitModal.style.opacity = '1';
+
+                    $("body").css("overflow","hidden");
+
+                    counter++;
+                    exitshow++;
+                    timer=500;
+                    exitfunc(exitshow,timer);
+                } 
+                return false;
+            }
+        }
+         
+    }); 
+}
+
+function secondtimer(timer){
+    setTimeout(function(){
+        secondleaveshow(maxshow);
+    }, timer)
+}
+
+function secondleaveshow(maxshow){
+
+        $(document).on('mouseleave', function(event) {
+            if($("#exit-pop").attr("class")!="modal-wrapper exit-intent remove"){ 
+     
+                if(event.clientY <= 0)
+
+                {
+                    if (exitModal.style.visibility === 'visible' ) {
+                        return false
+                    }
+                    exitModal.style.visibility = 'visible';
+                    exitModal.style.opacity = '1';
+                    $("body").css("overflow","hidden");
+
+                    counter++;
+                    exitshow++;
+                }  
+            }
+        }); 
+    
+}
+
+
