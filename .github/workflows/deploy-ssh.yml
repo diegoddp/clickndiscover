@@ -1,0 +1,41 @@
+name: Deploy Static Site via SSH
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare deploy package
+        run: |
+          mkdir -p deploy
+          cp "index.html" deploy/
+          cp "Spartamax Maximum Performance.html" deploy/
+          cp -R "Spartamax Maximum Performance_files" deploy/
+
+      - name: Clean target folder on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            mkdir -p "${{ secrets.SSH_TARGET_PATH }}"
+            rm -rf "${{ secrets.SSH_TARGET_PATH }}"/*
+
+      - name: Deploy site to server via SCP
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "deploy/"
+          target: ${{ secrets.SSH_TARGET_PATH }}
+          strip_components: 1
