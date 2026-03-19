@@ -1914,16 +1914,16 @@ border-top: 1px solid #fff;
   padding:2px 0 6px 50px;
 }
 .o-plus {
-  background-image: url("./ebook-blueprint.jpg");
+  background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-PLUS.png");
 }
 .o-support {
-  background-image: url("./arginine.jpg");
+  background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-red.png");
 }
 .o-books {
-  background-image: url("./grapeseed.jpg");
+  background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-blue.png");
 }
 .o-ship {
-  background-image: url("./beetroot.jpg");
+  background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-green.png");
 }
 
 .payCard img {
@@ -2260,7 +2260,7 @@ a.sixbtl.btn-rollover {
 		}
 
 		.bnsImage {
-		background-image: url("./ebook-blueprint.jpg");
+		background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-PLUS.png");
 		width: 300px;
 		background-size: cover;
 		display: flex;
@@ -3787,4 +3787,5 @@ transition: all .2s ease-in-out;
     font-size: 4rem;
   }
 }
+
 
