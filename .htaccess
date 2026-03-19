@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Serve the Spartamax landing page at /spartamax without exposing the file name.
+RewriteRule ^spartamax$ /spartamax/index.html [L]

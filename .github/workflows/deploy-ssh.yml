@@ -13,10 +13,11 @@ jobs:
 
       - name: Prepare deploy package
         run: |
-          mkdir -p deploy
+          mkdir -p deploy/spartamax
+          cp ".htaccess" deploy/
           cp "index.html" deploy/
-          cp "Spartamax Maximum Performance.html" deploy/
-          cp -R "Spartamax Maximum Performance_files" deploy/
+          cp "Spartamax Maximum Performance.html" deploy/spartamax/index.html
+          cp -R "Spartamax Maximum Performance_files" deploy/spartamax/
 
       - name: Clean target folder on server
         uses: appleboy/ssh-action@v1.0.3
