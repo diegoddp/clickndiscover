@@ -3793,3 +3793,138 @@ transition: all .2s ease-in-out;
 
 
 
+.offer-spotlight {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 24px 60px rgba(207, 94, 12, 0.28), 0 0 0 6px rgba(255, 177, 50, 0.35);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+#featured-offer {
+  scroll-margin-top: 32px;
+}
+body.offer-modal-open {
+  overflow: hidden;
+}
+
+.offer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 14, 24, 0.62);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.offer-modal--agegate {
+  width: min(860px, 100%);
+  background: linear-gradient(180deg, #fefefe 0%, #f6f1f0 100%);
+  border: 1px solid rgba(255,255,255,0.78);
+  border-radius: 30px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+  padding: 34px 34px 30px;
+  position: relative;
+}
+
+.offer-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  border: 0;
+  background: transparent;
+  color: #9a94a1;
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.offer-modal__headline {
+  margin: 0;
+  text-align: center;
+  color: #221b31;
+  font-size: clamp(2.3rem, 4.8vw, 4rem);
+  line-height: 1.02;
+  font-weight: 800;
+}
+
+.offer-modal__subcopy--agegate {
+  margin: 22px 0 0;
+  padding: 26px 20px 0;
+  border-top: 1px solid #ebe2e1;
+  text-align: center;
+  color: #322c39;
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  line-height: 1.35;
+}
+
+.offer-modal__subcopy--agegate strong {
+  display: inline-block;
+  font-weight: 800;
+}
+
+.offer-modal__cta-wrap--agegate {
+  margin: 24px auto 0;
+  max-width: 700px;
+  background: rgba(255,255,255,0.78);
+  border: 1px solid #ece1dd;
+  border-radius: 24px;
+  padding: 26px 24px 22px;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.offer-modal__button--agegate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: min(560px, 100%);
+  min-height: 82px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffb01f 0%, #f28d17 100%);
+  color: #fff;
+  text-decoration: none;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  box-shadow: 0 12px 28px rgba(243, 141, 23, 0.28), inset 0 -2px 0 rgba(0,0,0,0.08);
+}
+
+.offer-modal__dismiss--agegate {
+  display: inline-block;
+  margin-top: 20px;
+  color: #5f5a66;
+  font-size: clamp(1.15rem, 2vw, 1.7rem);
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .offer-overlay {
+    padding: 12px;
+  }
+
+  .offer-modal--agegate {
+    padding: 26px 16px 20px;
+    border-radius: 22px;
+  }
+
+  .offer-modal__subcopy--agegate {
+    padding: 20px 10px 0;
+    font-size: 1.05rem;
+  }
+
+  .offer-modal__cta-wrap--agegate {
+    padding: 18px 14px 16px;
+    border-radius: 18px;
+  }
+
+  .offer-modal__button--agegate {
+    min-height: 66px;
+    font-size: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .offer-modal__dismiss--agegate {
+    font-size: 1rem;
+  }
+}

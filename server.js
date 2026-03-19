@@ -10,6 +10,7 @@ const contentTypes = {
   ".css": "text/css; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".php": "text/html; charset=utf-8",
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
@@ -52,3 +53,5 @@ http
   .listen(port, "127.0.0.1", () => {
     console.log(`Static server running at http://127.0.0.1:${port}`);
   });
+
+

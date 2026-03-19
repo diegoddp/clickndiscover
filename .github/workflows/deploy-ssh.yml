@@ -16,6 +16,8 @@ jobs:
           mkdir -p deploy/spartamax
           cp ".htaccess" deploy/
           cp "index.html" deploy/
+          cp "terms.html" deploy/
+          cp "privacy.html" deploy/
           cp "Spartamax Maximum Performance.html" deploy/spartamax/index.html
           cp -R "Spartamax Maximum Performance_files" deploy/spartamax/
 
@@ -40,3 +42,7 @@ jobs:
           source: "deploy/"
           target: ${{ secrets.SSH_TARGET_PATH }}
           strip_components: 1
+
+
+
+
