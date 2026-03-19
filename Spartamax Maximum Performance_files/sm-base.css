@@ -1916,7 +1916,7 @@ border-top: 1px solid #fff;
   min-height: 42px;
 }
 .o-plus {
-  background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-PLUS.png");
+  background-image: url("./ebook-blueprint.jpg");
 }
 .o-support {
   background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-red.png");
@@ -2262,7 +2262,7 @@ a.sixbtl.btn-rollover {
 		}
 
 		.bnsImage {
-		background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-PLUS.png");
+		background-image: url("./ebook-blueprint.jpg");
 		width: 300px;
 		background-size: cover;
 		display: flex;
@@ -3789,6 +3789,7 @@ transition: all .2s ease-in-out;
     font-size: 4rem;
   }
 }
+
 
 
 
