@@ -1914,7 +1914,7 @@ border-top: 1px solid #fff;
   padding:2px 0 6px 50px;
 }
 .o-plus {
-  background-image: url("./BUY2.png");
+  background-image: url("./ebook-blueprint.jpg");
 }
 .o-support {
   background-image: url("./arginine.jpg");
@@ -2260,7 +2260,7 @@ a.sixbtl.btn-rollover {
 		}
 
 		.bnsImage {
-		background-image: url("./BUY2.png");
+		background-image: url("./ebook-blueprint.jpg");
 		width: 300px;
 		background-size: cover;
 		display: flex;
@@ -2270,7 +2270,7 @@ a.sixbtl.btn-rollover {
 		margin-right: 38px;
 		}
 		.bnsImage2 {
-		background-image: url("./spartamax_label.png");
+		background-image: url("./ebook-domSxPwr.jpg");
 		width: 300px;
 		background-size: cover;
 		display: flex;
@@ -3787,3 +3787,4 @@ transition: all .2s ease-in-out;
     font-size: 4rem;
   }
 }
+
