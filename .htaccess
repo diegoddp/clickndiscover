@@ -1,4 +1,4 @@
 RewriteEngine On
 
-# Serve the Spartamax landing page at /spartamax without exposing the file name.
-RewriteRule ^spartamax$ /spartamax/index.html [L]
+# Canonicalize Spartamax to a trailing-slash directory URL so relative assets resolve under /spartamax/.
+RewriteRule ^spartamax$ /spartamax/ [R=302,L]
