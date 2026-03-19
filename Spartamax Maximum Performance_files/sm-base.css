@@ -1901,17 +1901,19 @@ background: linear-gradient(to bottom, rgb(237,144,23) 0%,rgb(249, 203, 132) 100
 border-top: 1px solid #fff;
 }
 .buyOpt {
-  margin: 7px auto 18px;
+  margin: 10px auto 18px;
 }
 .bOpt {
-  background-size: contain;
-  margin:2px 7% -3px !important;
-  font-weight: 600;
+  background-size: 100% 100%;
+  margin: 0 7% 10px !important;
+  font-weight: 800;
   color: #fff;
-  line-height: 2 !important;
+  line-height: 1.2 !important;
   background-repeat: no-repeat;
   text-align: left;
-  padding:2px 0 6px 50px;
+  padding: 9px 12px 11px 44px;
+  display: block;
+  min-height: 42px;
 }
 .o-plus {
   background-image: url("https://getspartamax.com/assets/imgs/bonus/bns-PLUS.png");
@@ -3787,5 +3789,6 @@ transition: all .2s ease-in-out;
     font-size: 4rem;
   }
 }
+
 
 
