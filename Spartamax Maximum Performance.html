@@ -12,7 +12,7 @@
 
   <title>Spartamax Overview | Click N Discover</title>
   <meta name="description" content="Independent Spartamax overview page hosted on Click N Discover with product information, ingredients, bonuses, and checkout links.">
-  <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://clickndiscover.com/spartamax/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Click N Discover">
@@ -1267,69 +1267,16 @@ document.addEventListener('mousemove', function (e) {
   }
 
   var offerOpened = false;
-  var offerTriggerTimeout = null;
-  var hasEnteredPage = false;
-  var topMenuLinks = document.querySelectorAll('.menu a');
 
   function triggerOfferModal() {
     if (offerOpened) return;
     offerOpened = true;
-    if (offerTriggerTimeout) {
-      window.clearTimeout(offerTriggerTimeout);
-      offerTriggerTimeout = null;
-    }
-    window.removeEventListener('scroll', handleOfferScroll);
-    document.removeEventListener('mousemove', handleOfferMouseExit);
     openOfferModal();
-  }
-
-  function handleOfferScroll() {
-    var doc = document.documentElement;
-    var scrollable = doc.scrollHeight - window.innerHeight;
-    if (scrollable <= 0) return;
-    var progress = (window.scrollY || doc.scrollTop || 0) / scrollable;
-    if (progress >= 0.35) {
-      triggerOfferModal();
-    }
-  }
-
-  function handleOfferMouseExit(event) {
-    if (event.clientY > 80) {
-      hasEnteredPage = true;
-      return;
-    }
-    if (!hasEnteredPage) return;
-    if (event.clientY <= 12) {
-      triggerOfferModal();
-    }
   }
 
   window.addEventListener('load', function () {
     syncOfferElements();
-    if (offerDismiss) offerDismiss.addEventListener('click', closeOfferModal);
-    if (modalScrollOffer) {
-      modalScrollOffer.addEventListener('click', function (event) {
-        if (!pricebox) return;
-        event.preventDefault();
-        closeOfferModal();
-        pricebox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        window.setTimeout(function () {
-          spotlightOffer();
-        }, 450);
-      });
-    }
-
-    topMenuLinks.forEach(function (link) {
-      link.addEventListener('click', function (event) {
-        if (offerOpened) return;
-        event.preventDefault();
-        triggerOfferModal();
-      });
-    });
-
-    offerTriggerTimeout = window.setTimeout(triggerOfferModal, 10000);
-    window.addEventListener('scroll', handleOfferScroll, { passive: true });
-    document.addEventListener('mousemove', handleOfferMouseExit);
+    window.setTimeout(triggerOfferModal, 150);
   });
 
   var timerInterval = null;

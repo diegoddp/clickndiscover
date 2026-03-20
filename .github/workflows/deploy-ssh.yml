@@ -18,6 +18,8 @@ jobs:
           cp "index.html" deploy/
           cp "terms.html" deploy/
           cp "privacy.html" deploy/
+          cp "robots.txt" deploy/
+          cp "sitemap.xml" deploy/
           cp "Spartamax Maximum Performance.html" deploy/spartamax/index.html
           cp -R "Spartamax Maximum Performance_files" deploy/spartamax/
 
