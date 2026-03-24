@@ -14,12 +14,21 @@ jobs:
       - name: Prepare deploy package
         run: |
           mkdir -p deploy/brainwave
+          mkdir -p deploy/keyslim
           cp "index.html" deploy/
           cp "robots.txt" deploy/
           cp "sitemap.xml" deploy/
           cp "brainwave/index.html" deploy/brainwave/
           cp "brainwave/billionaire-brain-wave-desktop.png" deploy/brainwave/
           cp "brainwave/billionaire-brain-wave-mobile.png" deploy/brainwave/
+          if [ -f "brainwave/terms.html" ]; then cp "brainwave/terms.html" deploy/brainwave/; fi
+          if [ -f "brainwave/privacy.html" ]; then cp "brainwave/privacy.html" deploy/brainwave/; fi
+          cp "keyslim/index.html" deploy/keyslim/
+          cp "keyslim/keyslim-desktop.png" deploy/keyslim/
+          cp "keyslim/keyslim-mobile.png" deploy/keyslim/
+          cp "keyslim/favicon.svg" deploy/keyslim/
+          cp "keyslim/terms.html" deploy/keyslim/
+          cp "keyslim/privacy.html" deploy/keyslim/
 
       - name: Clean target folder on server
         uses: appleboy/ssh-action@v1.0.3
