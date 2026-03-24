@@ -13,15 +13,13 @@ jobs:
 
       - name: Prepare deploy package
         run: |
-          mkdir -p deploy/spartamax
-          cp ".htaccess" deploy/
+          mkdir -p deploy/billionairebrainwave
           cp "index.html" deploy/
-          cp "terms.html" deploy/
-          cp "privacy.html" deploy/
           cp "robots.txt" deploy/
           cp "sitemap.xml" deploy/
-          cp "Spartamax Maximum Performance.html" deploy/spartamax/index.html
-          cp -R "Spartamax Maximum Performance_files" deploy/spartamax/
+          cp "billionairebrainwave/index.html" deploy/billionairebrainwave/
+          cp "billionairebrainwave/billionaire-brain-wave-desktop.png" deploy/billionairebrainwave/
+          cp "billionairebrainwave/billionaire-brain-wave-mobile.png" deploy/billionairebrainwave/
 
       - name: Clean target folder on server
         uses: appleboy/ssh-action@v1.0.3
@@ -44,7 +42,3 @@ jobs:
           source: "deploy/"
           target: ${{ secrets.SSH_TARGET_PATH }}
           strip_components: 1
-
-
-
-
