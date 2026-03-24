@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Affiliate Modal Preview</title>
+  <style>
+    :root {
+      --bg: #091326;
+      --panel: #f8fafc;
+      --panel-border: rgba(255, 255, 255, 0.75);
+      --text: #182033;
+      --muted: #5d6880;
+      --overlay: rgba(4, 8, 18, 0.62);
+      --gold-top: #ffd768;
+      --gold-bottom: #f2b937;
+      --gold-border: #d39d21;
+      --blue-1: #0e4fd8;
+      --blue-2: #1a7cff;
+      --blue-3: #8fe0ff;
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.30);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #19345f 0%, #091326 55%, #050913 100%);
+      color: #fff;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+      padding: 72px 24px;
+      display: grid;
+      place-items: center;
+    }
+
+    .page-card {
+      width: min(980px, 100%);
+      padding: 48px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.24);
+      text-align: center;
+    }
+
+    .page-card h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.02;
+    }
+
+    .page-card p {
+      margin: 0;
+      color: rgba(255,255,255,0.72);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: var(--overlay);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 220ms ease, visibility 220ms ease;
+      z-index: 1000;
+    }
+
+    .modal-overlay.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      position: relative;
+      width: min(1020px, 100%);
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--shadow);
+      transform: translateY(20px) scale(0.98);
+      transition: transform 240ms ease, opacity 240ms ease;
+      opacity: 0;
+    }
+
+    .modal-overlay.is-visible .modal {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      color: #28324a;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .modal-close:hover {
+      background: #fff;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.95fr) minmax(360px, 1.05fr);
+      min-height: 600px;
+    }
+
+    .modal-visual {
+      position: relative;
+      overflow: hidden;
+      padding: 56px 34px 34px;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(143, 224, 255, 0.55), transparent 32%),
+        radial-gradient(circle at 70% 18%, rgba(255, 255, 255, 0.20), transparent 22%),
+        radial-gradient(circle at 78% 76%, rgba(143, 224, 255, 0.30), transparent 26%),
+        linear-gradient(180deg, #1a7cff 0%, #0f4ccb 48%, #0a2c84 100%);
+    }
+
+    .modal-visual::before,
+    .modal-visual::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.20);
+      pointer-events: none;
+    }
+
+    .modal-visual::before {
+      inset: 58px -120px auto auto;
+      width: 260px;
+      height: 260px;
+    }
+
+    .modal-visual::after {
+      inset: auto auto -110px -110px;
+      width: 280px;
+      height: 280px;
+    }
+
+    .glow {
+      position: absolute;
+      inset: auto 20px 14px 20px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(143, 224, 255, 0.50) 0%, rgba(143,224,255,0) 70%);
+      filter: blur(18px);
+    }
+
+    .mockup-stage {
+      position: relative;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    .mockup-book,
+    .mockup-phone,
+    .mockup-disc,
+    .mockup-headphones {
+      position: absolute;
+      filter: drop-shadow(0 26px 36px rgba(0,0,0,0.30));
+    }
+
+    .mockup-book {
+      left: 8px;
+      bottom: 74px;
+      width: 210px;
+      height: 300px;
+      border-radius: 12px;
+      transform: perspective(900px) rotateY(-18deg);
+      background: linear-gradient(180deg, #173f9d 0%, #0d1f58 100%);
+      border: 1px solid rgba(255,255,255,0.28);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .mockup-book::before {
+      content: "Billionaire\A Brain Wave";
+      white-space: pre;
+      position: absolute;
+      inset: 24px 16px auto 20px;
+      color: #f3fbff;
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      line-height: 0.92;
+      font-weight: 700;
+    }
+
+    .mockup-book::after {
+      content: "";
+      position: absolute;
+      inset: 96px 26px 42px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at center, rgba(74,198,255,0.85) 0%, rgba(74,198,255,0.08) 48%, transparent 56%),
+        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+
+    .mockup-disc {
+      left: 138px;
+      bottom: 56px;
+      width: 176px;
+      height: 176px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at center, #dde6f4 0 18px, #b6c5dd 19px 28px, transparent 29px),
+        radial-gradient(circle at center, rgba(255,255,255,0.14), rgba(255,255,255,0.03) 68%),
+        linear-gradient(180deg, #173f9d 0%, #0d1f58 100%);
+      border: 1px solid rgba(255,255,255,0.24);
+    }
+
+    .mockup-disc::before {
+      content: "Billionaire\A Brain Wave";
+      white-space: pre;
+      position: absolute;
+      inset: 28px 0 auto;
+      text-align: center;
+      color: #f3fbff;
+      font-family: Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.02;
+      font-weight: 700;
+    }
+
+    .mockup-phone {
+      left: 214px;
+      bottom: 44px;
+      width: 138px;
+      height: 284px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, #1d2430 0%, #070a10 100%);
+      border: 6px solid #101722;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .mockup-phone::before {
+      content: "";
+      position: absolute;
+      inset: 16px 14px 26px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at center, rgba(74,198,255,0.78) 0%, rgba(74,198,255,0.10) 44%, transparent 50%),
+        linear-gradient(180deg, #173f9d 0%, #0d1f58 100%);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .mockup-phone::after {
+      content: "Billionaire\A Brain Wave";
+      white-space: pre;
+      position: absolute;
+      inset: 32px 18px auto;
+      color: #f3fbff;
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 0.78rem;
+      line-height: 0.96;
+      font-weight: 700;
+      z-index: 1;
+    }
+
+    .mockup-headphones {
+      right: 6px;
+      bottom: 28px;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      border: 14px solid #d9dde4;
+      border-bottom-color: transparent;
+      border-left-color: #dbdde0;
+      border-right-color: #d5d7da;
+      transform: rotate(18deg);
+    }
+
+    .mockup-headphones::before,
+    .mockup-headphones::after {
+      content: "";
+      position: absolute;
+      bottom: 12px;
+      width: 54px;
+      height: 118px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, #d8dde4 0%, #b8bec8 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3);
+    }
+
+    .mockup-headphones::before {
+      left: 10px;
+    }
+
+    .mockup-headphones::after {
+      right: 10px;
+    }
+
+    .modal-copy {
+      padding: 76px 54px 52px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      color: var(--text);
+    }
+
+    .modal-copy h2 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+    }
+
+    .modal-copy p {
+      margin: 22px 0 0;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    .cta-wrap {
+      margin-top: 34px;
+      max-width: 430px;
+    }
+
+    #cta-button {
+      display: inline-flex;
+      width: 100%;
+      min-height: 68px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #212121;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      background: linear-gradient(180deg, var(--gold-top) 0%, var(--gold-bottom) 100%);
+      border: 1px solid var(--gold-border);
+      box-shadow: 0 16px 28px rgba(229, 171, 33, 0.26);
+    }
+
+    #cta-button:hover {
+      filter: brightness(1.02);
+      transform: translateY(-1px);
+    }
+
+    .disclaimer {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      color: #7b8498;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .modal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal {
+        width: min(680px, 100%);
+      }
+
+      .modal-visual {
+        padding: 34px 18px 12px;
+        min-height: 330px;
+      }
+
+      .mockup-stage {
+        min-height: 280px;
+      }
+
+      .mockup-book {
+        left: 12px;
+        bottom: 34px;
+        width: 142px;
+        height: 205px;
+      }
+
+      .mockup-disc {
+        left: 102px;
+        bottom: 18px;
+        width: 118px;
+        height: 118px;
+      }
+
+      .mockup-phone {
+        left: 168px;
+        bottom: 18px;
+        width: 92px;
+        height: 190px;
+      }
+
+      .mockup-headphones {
+        right: 8px;
+        bottom: 6px;
+        width: 160px;
+        height: 160px;
+        border-width: 11px;
+      }
+
+      .mockup-headphones::before,
+      .mockup-headphones::after {
+        width: 38px;
+        height: 78px;
+      }
+
+      .modal-copy {
+        padding: 32px 24px 26px;
+      }
+
+      .modal-copy h2 {
+        font-size: 1.7rem;
+      }
+
+      .modal-copy p {
+        font-size: 1rem;
+      }
+
+      .cta-wrap {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .modal-overlay {
+        padding: 14px;
+      }
+
+      .modal {
+        border-radius: 18px;
+      }
+
+      .modal-close {
+        top: 12px;
+        right: 12px;
+        width: 38px;
+        height: 38px;
+      }
+
+      .modal-visual {
+        min-height: 290px;
+      }
+
+      .modal-copy {
+        padding: 26px 18px 20px;
+      }
+
+      #cta-button {
+        min-height: 58px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    <section class="page-card">
+      <h1>Landing Page Placeholder</h1>
+      <p>This standalone preview shows the modal behavior and responsive design. Leave the page open for 5 seconds or move the cursor toward the top edge to trigger the modal again after refresh.</p>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-grid">
+        <div class="modal-visual">
+          <div class="glow"></div>
+          <div class="mockup-stage" aria-hidden="true">
+            <div class="mockup-book"></div>
+            <div class="mockup-disc"></div>
+            <div class="mockup-phone"></div>
+            <div class="mockup-headphones"></div>
+          </div>
+        </div>
+        <div class="modal-copy">
+          <h2 id="modal-title">Want to Learn More About This Audio Program?</h2>
+          <p>See how it works, what’s included, and what users are saying before getting started.</p>
+          <div class="cta-wrap">
+            <a id="cta-button" href="#">Check Price &amp; Availability</a>
+            <div class="disclaimer">Limited-time pricing may change.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById('modal-overlay');
+      var modal = overlay.querySelector('.modal');
+      var closeButton = document.getElementById('modal-close');
+      var timerId = null;
+      var hasOpened = false;
+      var exitIntentArmed = false;
+
+      function openModal() {
+        if (hasOpened) return;
+        hasOpened = true;
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeModal() {
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+
+      function handleExitIntent(event) {
+        if (event.clientY > 80) {
+          exitIntentArmed = true;
+          return;
+        }
+        if (!exitIntentArmed || hasOpened) return;
+        if (event.clientY <= 8) {
+          openModal();
+        }
+      }
+
+      timerId = window.setTimeout(openModal, 5000);
+
+      document.addEventListener('mousemove', handleExitIntent, { passive: true });
+
+      closeButton.addEventListener('click', closeModal);
+
+      overlay.addEventListener('click', function (event) {
+        if (!modal.contains(event.target)) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      });
+    }());
+  </script>
+</body>
+</html>

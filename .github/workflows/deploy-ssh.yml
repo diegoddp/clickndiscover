@@ -13,13 +13,13 @@ jobs:
 
       - name: Prepare deploy package
         run: |
-          mkdir -p deploy/billionairebrainwave
+          mkdir -p deploy/brainwave
           cp "index.html" deploy/
           cp "robots.txt" deploy/
           cp "sitemap.xml" deploy/
-          cp "billionairebrainwave/index.html" deploy/billionairebrainwave/
-          cp "billionairebrainwave/billionaire-brain-wave-desktop.png" deploy/billionairebrainwave/
-          cp "billionairebrainwave/billionaire-brain-wave-mobile.png" deploy/billionairebrainwave/
+          cp "brainwave/index.html" deploy/brainwave/
+          cp "brainwave/billionaire-brain-wave-desktop.png" deploy/brainwave/
+          cp "brainwave/billionaire-brain-wave-mobile.png" deploy/brainwave/
 
       - name: Clean target folder on server
         uses: appleboy/ssh-action@v1.0.3
