@@ -20,40 +20,41 @@
     a { color: #2a6b49; }
     .back { display: inline-flex; margin-top: 20px; font-weight: 700; text-decoration: none; }
   </style>
+  <script>
+    (function gateKeyslimTermsAccess() {
+      try {
+        if (window.localStorage.getItem('keyslimTermsAccess') !== 'granted') {
+          window.location.replace('/keyslim/');
+        }
+      } catch (error) {
+        window.location.replace('/keyslim/');
+      }
+    }());
+  </script>
 </head>
 <body>
   <div class="shell">
     <div class="card">
       <h1>Terms of Use</h1>
       <p>These terms apply to your use of the Keyslim Drops review page published on Click N Discover and to your interaction with any third-party offer pages linked from it. By using this page, you agree to these terms.</p>
-
       <h2>Informational Use Only</h2>
       <p>This page is provided for informational and promotional review purposes only. It should not be considered medical, nutritional, legal, or financial advice, and it does not replace guidance from qualified professionals.</p>
-
       <h2>Health Information Disclaimer</h2>
       <p>Based on the product site language, the information presented is not intended to replace consultation with a qualified medical professional. If you are pregnant, nursing, taking medication, or have a medical condition, consult your physician before using products discussed on this page.</p>
-
       <h2>No Guarantee of Results</h2>
       <p>Results described in promotional materials, testimonials, or examples are not guarantees. Individual results vary in amount and timing, and no example should be considered typical.</p>
-
       <h2>Orders, Billing, and Refunds</h2>
       <p>Purchases made after leaving this page are handled by the official seller and checkout provider. The source product page states that purchases are one-time payments and that customer statements may appear under the name “DIGISTORE24*”. It also states that a 60-day money-back guarantee is available, subject to the seller’s current refund process and return requirements. You should review the official seller terms before purchasing.</p>
-
       <h2>Shipping and Support</h2>
       <p>Shipping times, order support, refund handling, and product support are controlled by the official product seller and related service providers, not by Click N Discover.</p>
-
       <h2>Affiliate Disclosure</h2>
       <p>This page may contain affiliate links. If you click through and purchase, compensation may be received. Third-party websites operate under their own terms, privacy policies, and commercial practices.</p>
-
       <h2>Use Restrictions</h2>
       <p>You may not copy, redistribute, or commercially exploit any digital materials obtained through linked third-party offers unless the product seller explicitly allows that use.</p>
-
       <h2>Limitation of Liability</h2>
       <p>This page is provided on an “as is” and “as available” basis without warranties of any kind. To the fullest extent permitted by law, we are not liable for direct, indirect, incidental, special, or consequential damages arising from your use of this page or any linked third-party service.</p>
-
       <h2>Changes to Terms</h2>
       <p>These terms may be updated from time to time. Continued use of the page after changes are posted constitutes acceptance of the revised terms.</p>
-
       <p><strong>Last updated:</strong> March 24, 2026</p>
       <a class="back" href="/keyslim/">Back to Keyslim</a>
     </div>
