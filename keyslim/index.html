@@ -265,21 +265,33 @@
         window.location.href = targetUrl;
       }
 
+      function handleAcceptClick(event) {
+        event.preventDefault();
+
+        try {
+          window.localStorage.setItem(accessKey, 'granted');
+        } catch (error) {}
+
+        redirectToOffer();
+      }
+
+      function handleDeclineClick(event) {
+        event.preventDefault();
+        redirectToOffer();
+      }
+
       if (acceptButton) {
-        acceptButton.addEventListener('click', function () {
-          try {
-            window.localStorage.setItem(accessKey, 'granted');
-          } catch (error) {}
-          redirectToOffer();
-        });
+        acceptButton.addEventListener('click', handleAcceptClick);
       }
 
       if (declineButton) {
-        declineButton.addEventListener('click', redirectToOffer);
+        declineButton.addEventListener('click', handleDeclineClick);
       }
     }());
   </script>
 </body>
 </html>
+
+
 
 
