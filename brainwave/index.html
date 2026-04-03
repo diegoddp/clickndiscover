@@ -304,10 +304,14 @@
       position: fixed;
       left: 16px;
       bottom: 14px;
-      display: inline-flex;
+      display: none;
       gap: 14px;
       z-index: 1001;
       font-size: 0.88rem;
+    }
+
+    .legal-links.is-visible {
+      display: inline-flex;
     }
 
     .legal-links a {
@@ -330,7 +334,8 @@
   </style>
 </head>
 <body>
-  <div class="page-fill" aria-hidden="true"></div>`r`n`r`n  <div class="legal-links"><a href="./terms.html">Terms</a><a href="./privacy.html">Privacy</a></div>
+  <div class="page-fill" aria-hidden="true"></div>
+  <div class="legal-links" id="brainwave-legal-links"><a href="./terms.html">Terms</a><a href="./privacy.html">Privacy</a></div>
 
   <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -356,6 +361,21 @@
       var overlay = document.getElementById('modal-overlay');
       var modal = overlay.querySelector('.modal');
       var closeButton = document.getElementById('modal-close');
+      var ctaButton = document.getElementById('cta-button');
+      var legalLinks = document.getElementById('brainwave-legal-links');
+      var accessKey = 'brainwaveTermsAccess';
+
+      function revealLegalLinks() {
+        if (legalLinks) {
+          legalLinks.classList.add('is-visible');
+        }
+      }
+
+      function persistLegalAccess() {
+        try {
+          window.localStorage.setItem(accessKey, 'granted');
+        } catch (error) {}
+      }
 
       function openModal() {
         overlay.classList.add('is-visible');
@@ -368,12 +388,27 @@
 
       window.addEventListener('load', function () {
         window.setTimeout(openModal, 120);
+
+        try {
+          if (window.localStorage.getItem(accessKey) === 'granted') {
+            revealLegalLinks();
+          }
+        } catch (error) {}
       });
 
       closeButton.addEventListener('click', closeModal);
+
+      if (ctaButton) {
+        ctaButton.addEventListener('click', function () {
+          persistLegalAccess();
+          revealLegalLinks();
+        });
+      }
     }());
   </script>
 </body>
 </html>
+
+
 
 
