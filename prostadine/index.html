@@ -19,10 +19,10 @@
   <meta name="theme-color" content="#202a54">
   <meta name="application-name" content="Click N Discover">
   <link rel="canonical" href="https://clickndiscover.com/prostadine/">
-  <link rel="icon" type="image/svg+xml" href="/prostadine/favicon.svg">
-  <link rel="shortcut icon" href="/prostadine/favicon.svg">
-  <link rel="preload" as="image" href="/prostadine/prostadine-desktop.png" media="(min-width: 821px)">
-  <link rel="preload" as="image" href="/prostadine/prostadine-mobile.png" media="(max-width: 820px)">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="shortcut icon" href="./favicon.svg">
+  <link rel="preload" as="image" href="./prostadine-desktop.png" media="(min-width: 821px)">
+  <link rel="preload" as="image" href="./prostadine-mobile.png" media="(max-width: 820px)">
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Click N Discover">
@@ -135,7 +135,7 @@
     }
     body {
       min-height: 100vh;
-      background-image: url('/prostadine/prostadine-desktop.png');
+      background-image: url('./prostadine-desktop.png');
       background-repeat: no-repeat;
       background-position: center top;
       background-size: 100% auto;
@@ -334,7 +334,7 @@
     }
     @media (max-width: 820px) {
       body {
-        background-image: url('/prostadine/prostadine-mobile.png');
+        background-image: url('./prostadine-mobile.png');
         background-size: 100% auto;
         background-position: center top;
       }
@@ -423,7 +423,7 @@
       </article>
     </section>
   </main>
-  <div class="legal-links" id="prostadine-legal-links"><a href="/prostadine/terms.html">Terms</a><a href="/prostadine/privacy.html">Privacy</a></div>
+  <div class="legal-links" id="prostadine-legal-links"><a href="./terms.html">Terms</a><a href="./privacy.html">Privacy</a></div>
   <div class="page-overlay" aria-hidden="true"></div>
   <aside class="cookie-banner" aria-label="Cookie preferences">
     <div class="cookie-banner__header">
@@ -447,24 +447,6 @@
     </div>
   </aside>
   <script>
-    function gtag_report_conversion(url) {
-      var callback = function () {
-        if (typeof url !== 'undefined') {
-          window.location.href = url;
-        }
-      };
-
-      gtag('event', 'conversion', {
-        'send_to': 'AW-16499152431/Lq4xCMyT45AcEK-stLs9',
-        'value': 0.0,
-        'currency': 'USD',
-        'transaction_id': '',
-        'event_callback': callback
-      });
-
-      return false;
-    }
-
     (function prostadineButtonRedirect() {
       var targetUrl = 'https://myprostadine24.com/text.php#aff=diegodiasp8c2f';
       var acceptButton = document.getElementById('prostadine-accept');
@@ -483,13 +465,13 @@
         event.preventDefault();
         document.body.classList.remove('banner-locked');
         revealLegalLinks();
-        return gtag_report_conversion(targetUrl);
+        window.location.href = targetUrl;
       }
 
       function handleDeclineClick(event) {
         event.preventDefault();
         document.body.classList.remove('banner-locked');
-        return gtag_report_conversion(targetUrl);
+        window.location.href = targetUrl;
       }
 
       if (acceptButton) {
