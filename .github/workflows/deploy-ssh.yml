@@ -38,6 +38,7 @@ jobs:
           cp "prostadine/privacy.html" deploy/prostadine/
           mkdir -p deploy/avatar-ia-lucrativo/depoimentos
           cp "avatar-ia-lucrativo/index.html" deploy/avatar-ia-lucrativo/
+          cp "avatar-ia-lucrativo/favicon.svg" deploy/avatar-ia-lucrativo/
           cp "avatar-ia-lucrativo/privacy.html" deploy/avatar-ia-lucrativo/
           cp "avatar-ia-lucrativo/terms.html" deploy/avatar-ia-lucrativo/
           cp "avatar-ia-lucrativo/foto-autor.jpg" deploy/avatar-ia-lucrativo/
