@@ -2591,6 +2591,46 @@
       flex-shrink: 0;
     }
 
+    /* Barra de confiança (pagamentos + Digistore24) */
+    .footer-trust {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 22px 0;
+      margin-top: 8px;
+      border-top: 1px solid #1c1c1c;
+    }
+
+    .footer-trust-secure {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #cfcfcf;
+      letter-spacing: 0.2px;
+    }
+
+    .footer-trust-secure svg { width: 16px; height: 16px; color: var(--gold); }
+    .footer-ds24-logo { height: 20px; width: auto; display: inline-block; vertical-align: middle; }
+
+    .footer-pay {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .footer-pay img {
+      height: 30px;
+      width: auto;
+      border-radius: 5px;
+      display: block;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
     .footer-bottom {
       border-top: 1px solid #1c1c1c;
       padding-top: 24px;
@@ -3498,6 +3538,20 @@
             <li><span class="footer-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>Diego V. Nox</span></li>
           </ul>
         </div>
+      </div>
+
+      <div class="footer-trust">
+        <span class="footer-trust-secure">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Compra 100% segura via
+          <img src="digistore24-logo.svg" alt="Digistore24" class="footer-ds24-logo" width="122" height="22" />
+        </span>
+        <span class="footer-pay">
+          <img src="visa.svg" alt="Visa" width="47" height="30" loading="lazy" />
+          <img src="mastercard.svg" alt="Mastercard" width="47" height="30" loading="lazy" />
+          <img src="amex.svg" alt="American Express" width="47" height="30" loading="lazy" />
+          <img src="paypal.svg" alt="PayPal" width="47" height="30" loading="lazy" />
+        </span>
       </div>
 
       <div class="footer-bottom">
