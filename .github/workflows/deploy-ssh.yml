@@ -48,6 +48,7 @@ jobs:
           cp "avatar-ia-lucrativo/Selo_de_Garantia_de_7_Dias_PNG_Transparente_Sem_Fundo.webp" deploy/avatar-ia-lucrativo/
           cp avatar-ia-lucrativo/depoimentos/*.png deploy/avatar-ia-lucrativo/depoimentos/
           cp avatar-ia-lucrativo/depoimentos/*.webp deploy/avatar-ia-lucrativo/depoimentos/
+          cp -r avatar-ia-lucrativo-ds24 deploy/
 
       - name: Clean target folder on server
         uses: appleboy/ssh-action@v1.0.3
