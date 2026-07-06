@@ -1625,6 +1625,73 @@
       text-underline-offset: 3px;
     }
 
+    /* ===== Timer de oferta (contagem por sessão) ===== */
+    .offer-timer {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 12px 16px;
+      border: 1px solid #3d2f10;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(215, 167, 45, 0.09), rgba(215, 167, 45, 0.02));
+    }
+
+    .offer-timer-label {
+      color: var(--gold-strong);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .offer-timer-clock {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .offer-timer-unit {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 52px;
+      padding: 6px 4px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid #2a2109;
+    }
+
+    .offer-timer-unit b {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 34px;
+      line-height: 1;
+      color: var(--gold-strong);
+      letter-spacing: 1px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .offer-timer-unit i {
+      font-style: normal;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .offer-timer-sep {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 30px;
+      color: var(--gold);
+      padding-bottom: 18px;
+    }
+
+    @media (max-width: 600px) {
+      .offer-timer-unit { min-width: 46px; }
+      .offer-timer-unit b { font-size: 28px; }
+    }
+
     .price-block {
       margin-bottom: 16px;
     }
@@ -3591,6 +3658,17 @@
         <p class="offer-desc offer-desc-full">Ebook completo + 3 bônus, com <u>acesso imediato</u> e <u>pagamento único</u>. Sem mensalidade, sem pegadinha.</p>
         <p class="offer-desc offer-desc-mobile">Ebook + 3 bônus com <u>acesso imediato</u>.</p>
 
+        <div class="offer-timer" id="offerTimer" role="timer" aria-live="off" hidden>
+          <span class="offer-timer-label">Esta oferta termina em</span>
+          <div class="offer-timer-clock">
+            <span class="offer-timer-unit"><b data-timer-h>00</b><i>horas</i></span>
+            <span class="offer-timer-sep">:</span>
+            <span class="offer-timer-unit"><b data-timer-m>00</b><i>min</i></span>
+            <span class="offer-timer-sep">:</span>
+            <span class="offer-timer-unit"><b data-timer-s>00</b><i>seg</i></span>
+          </div>
+        </div>
+
         <div class="price-block">
           <div class="price-old"><span class="price-old-full">Ebook + bônus valem </span><s>R$ 218</s><span class="price-old-full"> — hoje por apenas</span><span class="price-old-mobile"> por apenas</span></div>
           <div class="price"><small>R$</small> 29<span class="price-cents">,90</span></div>
@@ -3873,6 +3951,59 @@
       }
     });
     sync();
+  })();
+  </script>
+
+  <script>
+  /* Timer de oferta por sessão — janela persistida no navegador do visitante.
+     Não reinicia a cada refresh: a mesma pessoa vê a contagem cair de verdade.
+     Duração da oferta (em minutos): ajuste OFFER_MINUTES abaixo. */
+  (function(){
+    var el = document.getElementById('offerTimer');
+    if(!el) return;
+
+    var OFFER_MINUTES = 30;               // janela por visitante
+    var KEY = 'avatarIaOfferDeadline';    // guarda o momento em que expira
+
+    var hEl = el.querySelector('[data-timer-h]');
+    var mEl = el.querySelector('[data-timer-m]');
+    var sEl = el.querySelector('[data-timer-s]');
+
+    function now(){ return Date.now(); }
+
+    function readDeadline(){
+      var raw;
+      try { raw = window.localStorage.getItem(KEY); } catch(e){ raw = null; }
+      var t = raw ? parseInt(raw, 10) : NaN;
+      // deadline inválido ou muito no futuro (relógio bagunçado) → recria
+      if(isNaN(t) || t <= now() - 1000 || t > now() + OFFER_MINUTES*60000 + 5000){
+        t = now() + OFFER_MINUTES*60000;
+        try { window.localStorage.setItem(KEY, String(t)); } catch(e){}
+      }
+      return t;
+    }
+
+    var deadline = readDeadline();
+
+    function pad(n){ return (n < 10 ? '0' : '') + n; }
+
+    function tick(){
+      var diff = deadline - now();
+      if(diff <= 0){
+        // expirou: esconde o timer, mantém o preço/CTA intactos
+        el.hidden = true;
+        clearInterval(timer);
+        return;
+      }
+      var totalSec = Math.floor(diff / 1000);
+      hEl.textContent = pad(Math.floor(totalSec / 3600));
+      mEl.textContent = pad(Math.floor((totalSec % 3600) / 60));
+      sEl.textContent = pad(totalSec % 60);
+    }
+
+    el.hidden = false;
+    tick();
+    var timer = setInterval(tick, 1000);
   })();
   </script>
 
