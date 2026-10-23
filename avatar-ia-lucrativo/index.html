@@ -3532,6 +3532,67 @@
         });
       }
 
+      /* ── Âncoras internas: imagens lazy acima do destino carregam durante a
+         rolagem e empurram a página, então a rolagem parava antes da seção.
+         Carrega essas imagens na hora e corrige o destino se o layout mudar. ── */
+      var topbarEl = document.querySelector('.topbar');
+
+      function anchorTop(target) {
+        // no mobile a oferta abre com a imagem; mira no bloco de preço + botão
+        var el = target;
+        if (target.id === 'oferta' && window.innerWidth <= 600) {
+          el = target.querySelector('.offer-right') || target;
+        }
+        var top = 0;
+        for (var n = el; n; n = n.offsetParent) top += n.offsetTop;
+        var bar = topbarEl ? topbarEl.offsetHeight : 76;
+        return Math.max(0, top - bar);
+      }
+
+      function scrollToAnchor(target, smooth) {
+        document.querySelectorAll('img[loading="lazy"]').forEach(function (img) {
+          if (img.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING) img.loading = 'eager';
+        });
+        var behavior = smooth && !reduced ? 'smooth' : 'auto';
+        var lastTop = anchorTop(target);
+        window.scrollTo({ top: lastTop, behavior: behavior });
+
+        // re-mira por ~3s enquanto as imagens terminam de carregar; para se o usuário rolar
+        var cancelled = false;
+        function cancel() { cancelled = true; }
+        window.addEventListener('wheel', cancel, { passive: true });
+        window.addEventListener('touchstart', cancel, { passive: true });
+        var checks = 0;
+        var timer = setInterval(function () {
+          var top = anchorTop(target);
+          if (!cancelled && top !== lastTop) {
+            lastTop = top;
+            window.scrollTo({ top: top, behavior: behavior });
+          }
+          if (cancelled || ++checks >= 15) {
+            clearInterval(timer);
+            window.removeEventListener('wheel', cancel);
+            window.removeEventListener('touchstart', cancel);
+          }
+        }, 200);
+      }
+
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        var id = link.getAttribute('href').slice(1);
+        var target = id && document.getElementById(id);
+        if (!target) return;
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          history.pushState(null, '', '#' + id);
+          scrollToAnchor(target, true);
+        });
+      });
+
+      if (location.hash.length > 1) {
+        var hashTarget = document.getElementById(location.hash.slice(1));
+        if (hashTarget) window.addEventListener('load', function () { scrollToAnchor(hashTarget, false); });
+      }
+
       /* ── Snap por rolada: uma rolada = próxima seção ── */
       if (!reduced && window.innerWidth >= 980 && !('ontouchstart' in window)) {
         var snapTargets = Array.prototype.slice.call(
