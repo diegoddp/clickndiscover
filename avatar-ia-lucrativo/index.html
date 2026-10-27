@@ -2791,6 +2791,24 @@
       .back-to-top:hover { transform: none; }
     }
   </style>
+
+  <!-- Rastreamento: preencha os IDs para ativar (vazio = desligado) -->
+  <script>
+    window.TRACKING = {
+      metaPixelId: '',  // Meta: Gerenciador de Eventos → Fontes de dados → ID do pixel
+      clarityId: ''     // clarity.microsoft.com → Settings → Overview → Project ID
+    };
+    (function (cfg) {
+      if (cfg.metaPixelId) {
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', cfg.metaPixelId);
+        fbq('track', 'PageView');
+      }
+      if (cfg.clarityId) {
+        (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",cfg.clarityId);
+      }
+    })(window.TRACKING);
+  </script>
 </head>
 <body>
   <header class="topbar">
@@ -3800,6 +3818,43 @@
     el.hidden = false;
     tick();
     var timer = setInterval(tick, 1000);
+  })();
+  </script>
+
+  <script>
+  /* Origem da visita → checkout da Hotmart. As UTMs da URL (ou o site de onde a
+     pessoa veio) são repassadas ao link de compra e aparecem no relatório de
+     vendas da Hotmart como src (utm_source) e sck (medium_campaign_content). */
+  (function () {
+    var KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    var params = new URLSearchParams(location.search);
+    var origin = {};
+    try { origin = JSON.parse(sessionStorage.getItem('origin') || '{}'); } catch (e) {}
+
+    if (KEYS.some(function (k) { return params.get(k); })) {
+      origin = {};
+      KEYS.forEach(function (k) { if (params.get(k)) origin[k] = params.get(k); });
+    } else if (!origin.utm_source && document.referrer) {
+      var ref = new URL(document.referrer).hostname.replace(/^www\./, '');
+      if (ref && ref !== location.hostname.replace(/^www\./, '')) {
+        origin = { utm_source: ref, utm_medium: 'referral' };
+      }
+    }
+    try { sessionStorage.setItem('origin', JSON.stringify(origin)); } catch (e) {}
+
+    document.querySelectorAll('a[href*="pay.hotmart.com"]').forEach(function (a) {
+      var url = new URL(a.href);
+      Object.keys(origin).forEach(function (k) { url.searchParams.set(k, origin[k]); });
+      if (origin.utm_source) url.searchParams.set('src', origin.utm_source);
+      var sck = [origin.utm_medium, origin.utm_campaign, origin.utm_content].filter(Boolean).join('_');
+      if (sck) url.searchParams.set('sck', sck);
+      a.href = url.toString();
+
+      a.addEventListener('click', function () {
+        if (window.fbq) fbq('track', 'InitiateCheckout', { value: 29.90, currency: 'BRL' });
+        if (window.clarity) clarity('event', 'checkout_click');
+      });
+    });
   })();
   </script>
 
